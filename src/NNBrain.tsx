@@ -3,7 +3,27 @@ import datasource from './datasource.json';
 import { NeuralNetwork } from 'brain.js/src/index';
 
 const net = new NeuralNetwork();
-net.train(datasource);
+net.train(datasource.map(item => {
+    return {
+        input: {
+            ...setColorPercentage(item.input)
+        },
+        output: item.output
+    }
+}));
+
+function setColorPercentage(color: {
+    r: number,
+    g: number,
+    b: number,
+}) {
+    const result = {
+        r: (color.r / 255),
+        g: (color.g / 255),
+        b: (color.b / 255)
+    }
+    return result
+}
 
 export interface Props {
     input?: {
@@ -32,7 +52,7 @@ export default function Brain({
         white: number,
     } | undefined>(() => {
         if (input) {
-            const result = net.run(input) as {
+            const result = net.run(setColorPercentage(input)) as {
                 black: number,
                 white: number,
             }
