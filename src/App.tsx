@@ -24,6 +24,7 @@ function App() {
         <div className="App">
             <div>
                 <SketchPicker
+                    color={input}
                     onChange={colorHandler}
                 />
 
