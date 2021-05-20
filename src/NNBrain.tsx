@@ -17,16 +17,14 @@ export default function Brain({
     input
 }: Props) {
 
-    function getRangeName(value: number): 'low' | 'middle' | 'high' | undefined {
-        if (value >= 0 && value <= 0.3) {
+    function getRangeName(first: number, second: number): 'low' | 'high' | 'unknown' {
+        if (first > second) {
             return 'high'
-        } else if (value > 0.3 && value <= 0.7) {
-            return 'middle'
-        } else if (value > 0.7 && value <= 1) {
+        } else if (first < second) {
             return 'low'
         }
 
-        return undefined
+        return 'unknown'
     }
 
     const output = useMemo<{
@@ -51,11 +49,11 @@ export default function Brain({
     return (
         <div>
             <span style={{ padding: 5 }}>
-                white: <strong>{getRangeName(Number(output.white.toFixed(2)))} ({output.white.toFixed(2)}) certainty</strong>
+                white: <strong>{getRangeName(Number(output.white.toFixed(2)), Number(output.black.toFixed(2)))} ({output.white.toFixed(2)}) certainty</strong>
             </span>
 
             <span style={{ padding: 5 }}>
-                black: <strong>{getRangeName(Number(output.black.toFixed(2)))} ({output.black.toFixed(2)}) certainty</strong>
+                black: <strong>{getRangeName(Number(output.black.toFixed(2)), Number(output.white.toFixed(2)))} ({output.black.toFixed(2)}) certainty</strong>
             </span>
         </div>
     )
