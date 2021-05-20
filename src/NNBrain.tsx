@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import datasource from './datasource.json';
-import brain from 'brain.js';
+import { NeuralNetwork } from 'brain.js/src/index';
 
-const net = new brain.NeuralNetwork();
+const net = new NeuralNetwork();
 net.train(datasource);
 
 export interface Props {
@@ -13,7 +13,7 @@ export interface Props {
     }
 }
 
-export default function NeuralNetwork({
+export default function Brain({
     input
 }: Props) {
 
